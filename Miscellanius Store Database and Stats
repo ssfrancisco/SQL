@@ -1,0 +1,56 @@
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, retail_price INTEGER, wholesale_price INTEGER);
+
+INSERT INTO store
+VALUES
+(1, "wallet", 10, 5, 3),
+(2, "key", 20, 3, 1),
+(3, "ring", 15, 20, 15),
+(4, "mouse", 10, 30, 25),
+(5, "teaspoon", 25, 2, 1),
+(6, "glasses", 15, 10, 8),
+(7, "belt", 3, 10, 9),
+(8, "notebook", 5, 3, 2),
+(9, "mouse pad", 7, 4, 2),
+(10, "toilet paper", 30, 10, 8),
+(11, "distilled water", 15, 10, 9),
+(12, "boxes", 5, 7, 5),
+(13, "napkins", 25, 5, 3),
+(14, "laptop", 3, 100, 85),
+(15, "hoodie", 5, 20, 15);
+
+--display the database ordered by price.
+SELECT * FROM store
+ORDER BY price DESC;
+
+--display the total of quantity of items.
+SELECT SUM(quantity) FROM store;
+
+--display the average if quantity for item.
+SELECT AVG(quantity) FROM store;
+
+--display the maximum quantity of items.
+SELECT MAX(quantity) FROM store;
+
+--display the minimum of quantity of items.
+SELECT MIN(quantity) FROM store;
+
+--display the maximum retail price from the items.
+SELECT MAX(retail_price) FROM store;
+
+--display the minimum retail price from the items.
+SELECT MIN(retail_price) FROM store;
+
+--display the ids, items and retail prices, group by retail prices.
+SELECT id, item, retail_price FROM store 
+GROUP BY retail_price;
+
+--display the database ordered by retail price when the price is equal or greater than 20
+SELECT * FROM store
+WHERE retail_price >= 20
+ORDER BY retail_price DESC;
+
+--display the first 5 rows of the database
+SELECT * FROM store LIMIT 5;
+
+--display the sum of retail price grouped by id
+SELECT id, SUM(retail_price) FROM store GROUP BY id;
