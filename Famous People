@@ -1,0 +1,52 @@
+#create a table of actors 
+CREATE TABLE actors (id INTEGER PRIMARY KEY, name TEXT, country TEXT);
+
+INSERT INTO actors (name, country)
+VALUES ('ryan reynolds', 'canada');
+INSERT INTO actors (name, country)
+VALUES ('will smith', 'usa');
+INSERT INTO actors (name, country)
+VALUES ('javier bardem', 'spain');
+
+#display all the records from the table actors
+SELECT (*) FROM actors;
+
+#create a table of actresses spouses of the actors
+CREATE TABLE spouses (id INTEGER PRIMARY KEY, name TEXT, spouse_id INTEGER);
+
+INSERT INTO spouses (name, spouse_id)
+VALUES ('blake lively', 1);
+INSERT INTO spouses (name, spouse_id)
+VALUES ('penelope cruz', 3);
+INSERT INTO spouses (name, spouse_id)
+VALUES ('jada pinkett', 2);
+
+#display all the record from the table spouses
+SELECT (*) FROM spouses;
+
+#join the tables actors and spouses and display who is married to whom
+SELECT a.name AS husband, s.name AS wife
+    FROM actors a
+    LEFT OUTER JOIN spouses s
+    ON a.id = s.spouse_id;
+
+#create a table of movies where the actors and actresses have worked together 
+CREATE TABLE movies (id INTEGER PRIMARY KEY, name TEXT, actor_id INTEGER, actress_id INTEGER);
+
+INSERT INTO movies (name, actor_id, actress_id)
+VALUES ("hitman's wife's bodyguard", 1, 2);
+INSERT INTO movies (name, actor_id, actress_id)
+VALUES ("colateral", 3, 3);
+INSERT INTO movies (name, actor_id, actress_id)
+VALUES ("green lantern", 1, 1);
+
+#display all the records from the table movies
+SELECT * FROM movies;
+
+#join the three tables actors spouses and movies and display the movies the actors and actresses who have acted in them
+SELECT movies.name AS movies, actors.name AS actors, spouses.name AS actress
+    FROM movies
+    JOIN actors
+    ON movies.actor_id = actors.id
+    JOIN spouses
+    ON movies.actress_id = spouses.id;
