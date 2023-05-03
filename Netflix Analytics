@@ -1,0 +1,53 @@
+#In this SQL code I'm querying a database that's holding Netflix data to answer questions about the data
+
+#display all the records from the first 10 rows from the table netflix_titles_info
+SELECT * FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" LIMIT 10;
+
+#join the tables netflix_people and netflix_titles_info and display records from both tables
+SELECT 
+people.show_id
+,titles.title
+,titles.type
+,people.director
+,people.cast
+,titles.release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+ON people.show_id=titles.show_id;
+
+#display the total of titles in the database (6131)
+SELECT COUNT(*)
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type='Movie';
+
+#display the date when the most recent batch of tv shows and movies were added to the database (2021-09-25)
+SELECT MAX(date(date_added))
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info";
+
+#list all the movies and tv shows in alphabetical order
+SELECT title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+ORDER BY title ASC
+
+#display the director of the movie Brigth Star (Jane Champion)
+SELECT director
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_people" people
+ON titles.show_id=people.show_id
+WHERE title='Bright Star'; 
+
+#display the oldest movie in the database and what year was made (Prelude of War 1942)
+SELECT title, release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type='Movie'
+ORDER BY release_year ASC
+LIMIT 1;
+
+#display the oldest movies in the database and what year were made (Prelude of War 1942 and The Battle of Midway 1942)
+SELECT title, release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type='Movie'
+AND release_year <=
+(SELECT MIN(release_year)
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie')
